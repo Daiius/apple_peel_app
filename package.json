@@ -1,0 +1,25 @@
+{
+  "name": "apple_peel_app",
+  "version": "1.0.0",
+  "description": "interactive 3D plotting for apple peel problem",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daiji Yamashita",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/plotly.js": "^1.54.20",
+    "@types/react": "^18.0.5",
+    "@types/react-dom": "^18.0.1",
+    "plotly.js": "^1.58.5",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-plotlyjs-ts": "^2.2.2",
+    "ts-loader": "^9.2.8",
+    "tsc": "^2.0.4",
+    "typescript": "^4.6.3",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
+  }
+}
