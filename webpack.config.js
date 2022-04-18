@@ -39,7 +39,8 @@ module.exports = {
   },
   externals: {
     'react': 'react',
-    'react-dom': 'reactDOM'
+    'react-dom': 'reactDOM',
+    "plotly": "plotlly"
   },
 //  optimization: {
 //    minimize: true
