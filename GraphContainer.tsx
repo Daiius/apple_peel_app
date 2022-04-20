@@ -1,7 +1,9 @@
 
 interface State {
+  t: number[];
   x: number[];
   y: number[];
+  z: number[];
 };
 
 interface Props {
@@ -11,40 +13,80 @@ export default class GraphContainer extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    const x = this.range(-10, 10);
-    const a = 1;
-    this.state = { 
-      x: x, 
-      y: this.calcY(x, a)
+    const pi = 3.14159265358979;
+    const t = this.range(0, pi, 1e-2);
+    const a = 10;
+    this.state = {
+      t: t,
+      x: this.calcX(t, a), 
+      y: this.calcY(t, a),
+      z: this.calcZ(t, a)
       };
   }
 
-  range = (start: number, end: number):number[] => {
-    return Array.from({ length: end - start + 1 }, (v, i) => i);
+  range = (start: number, end: number, step: number):number[] => {
+    return Array.from({ length: (end - start)/step }, (v, i) => start + i*step);
   }
 
-  calcY = (x: number[], a: number):number[] => {
-    return x.map(xx => xx*xx*a);
+  calcX = (t: number[], a: number): number[] => {
+    return t.map(t => Math.sin(t) * Math.cos(a*t));
+  }
+  calcY = (t: number[], a: number):number[] => {
+    return t.map(t => Math.sin(t) * Math.sin(a*t));
+  }
+  calcZ = (t: number[], a: number): number[] => {
+    return t.map(t => Math.cos(t));
   }
 
   onCoeffChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({y: this.calcY(this.state.x, parseInt(e.target.value))});
-    Plotly.newPlot("graph",[{
-      x: this.state.x, y: this.state.y, type: "scatter"
-    }]);
+    const a = parseInt(e.target.value);
+    this.setState({
+      x: this.calcX(this.state.t, a),
+      y: this.calcY(this.state.t, a),
+      z: this.calcZ(this.state.t, a)
+      });
+    const layout = {
+      autosize: false,
+      width:  1,
+      height: 1,
+      };
+    Plotly.newPlot(
+      "graph",
+      [{
+        x: this.state.x, 
+        y: this.state.y,
+        z: this.state.z,
+        type: "scatter3d",
+        mode: "lines"
+      }], 
+      layout
+      );
   }
 
   componentDidMount() {
-    Plotly.newPlot("graph",[{
-      x: this.state.x, y: this.state.y, type: "scatter"
-    }]);
+    const layout = {
+      autosize: false,
+      width:  1,
+      height: 1,
+      };
+    Plotly.newPlot(
+      "graph",
+      [{
+        x: this.state.x, 
+        y: this.state.y,
+        z: this.state.z,
+        type: "scatter3d",
+        mode: "lines"
+      }],
+      layout
+      );
   }
 
   render() {
     return (
       <div>
         <div id="graph"></div>
-        <input type="range" min={1} max={10} step={0.1} onChange={this.onCoeffChange}/>
+        <input type="range" min={0} max={30} step={0.1} defaultValue={10} onChange={this.onCoeffChange}/>
       </div>
     );
   }
