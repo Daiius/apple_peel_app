@@ -9,7 +9,7 @@ interface State {
 interface Props {
 };
 
-export default class GraphContainer extends React.Component<Props, State> {
+export default class Graph3DContainer extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
@@ -45,40 +45,22 @@ export default class GraphContainer extends React.Component<Props, State> {
       y: this.calcY(this.state.t, a),
       z: this.calcZ(this.state.t, a)
       });
-    const layout = {
-      autosize: false,
-      width:  1,
-      height: 1,
-      };
-    Plotly.newPlot(
+    const layout = { autosize: false, width:  1, height: 1 };
+    Plotly.react(
       "graph",
-      [{
-        x: this.state.x, 
-        y: this.state.y,
-        z: this.state.z,
-        type: "scatter3d",
-        mode: "lines"
-      }], 
-      layout
+      [{x: this.state.x, y: this.state.y, z: this.state.z,
+        type: "scatter3d", mode: "lines"
+      }], layout
       );
   }
 
   componentDidMount() {
-    const layout = {
-      autosize: false,
-      width:  1,
-      height: 1,
-      };
+    const layout = { autosize: false, width:  1, height: 1 };
     Plotly.newPlot(
       "graph",
-      [{
-        x: this.state.x, 
-        y: this.state.y,
-        z: this.state.z,
-        type: "scatter3d",
-        mode: "lines"
-      }],
-      layout
+      [{x: this.state.x, y: this.state.y, z: this.state.z,
+        type: "scatter3d", mode: "lines"
+      }], layout
       );
   }
 
@@ -87,6 +69,7 @@ export default class GraphContainer extends React.Component<Props, State> {
       <div>
         <div id="graph"></div>
         <input type="range" min={0} max={30} step={0.1} defaultValue={10} onChange={this.onCoeffChange}/>
+        
       </div>
     );
   }
