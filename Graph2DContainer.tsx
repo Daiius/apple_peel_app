@@ -1,6 +1,7 @@
 
 import {range, pi, cumtrapz} from "./math_utils"
-import * as Plotly from "plotly.js"
+
+import {react, newPlot, LayoutAxis} from "plotly.js"
 
 interface State {
   t: number[];
@@ -42,7 +43,7 @@ export default class Graph2DContainer extends React.Component<Props, State> {
       });
     const layout = {
       autosize: true, width:  500, height: 500,
-      yaxis: { scaleanchor: "x", scaleratio: 1.0 }
+      yaxis: { scaleanchor: "x", scaleratio: 1.0 } as Partial<LayoutAxis>
       };
     Plotly.react(
       "graph_2d",
@@ -55,7 +56,7 @@ export default class Graph2DContainer extends React.Component<Props, State> {
   componentDidMount() {
     const layout = {
       autosize: true, width:  500, height: 500,
-      yaxis: { scaleanchor: "x", scaleratio: 1.0 }
+      yaxis: { scaleanchor: "x", scaleratio: 1.0 } as Partial<LayoutAxis>
       };
     Plotly.newPlot(
       "graph_2d",
