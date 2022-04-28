@@ -15,7 +15,6 @@
     "plotly.js": "^1.58.5",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-plotlyjs-ts": "^2.2.2",
     "ts-loader": "^9.2.8",
     "tsc": "^2.0.4",
     "typescript": "^4.6.3",
