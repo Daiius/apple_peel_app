@@ -2,6 +2,7 @@
 import React from "react"
 import {pi, range} from "./math_utils"
 import Plotly from "plotly.js-dist-min"
+import classes from "./styles.module.css"
 
 interface State {
 };
@@ -32,7 +33,11 @@ export default class Graph3DContainer extends React.Component<Props, State> {
     const y: number[] = this.calcY(t, this.props.a);
     const z: number[] = this.calcZ(t, this.props.a);
 
-    const layout = { autosize: false, width:  500, height: 500 };
+    const layout = { 
+      autosize: true,
+      yaxis: { scaleanchor: "x", scaleratio: 1.0 } as Partial<Plotly.LayoutAxis>,
+      zaxis: { scaleanchor: "x", scaleratio: 1.0 } as Partial<Plotly.LayoutAxis>
+      };
     Plotly.react(
       "graph_3d",
       [{x: x, y: y, z: z,
@@ -46,7 +51,11 @@ export default class Graph3DContainer extends React.Component<Props, State> {
     const x: number[] = this.calcX(t, this.props.a);
     const y: number[] = this.calcY(t, this.props.a);
     const z: number[] = this.calcZ(t, this.props.a);
-    const layout = { autosize: false, width:  500, height: 500 };
+    const layout = { 
+      autosize: true,
+      yaxis: { scaleanchor: "x", scaleratio: 1.0 } as Partial<Plotly.LayoutAxis>,
+      zaxis: { scaleanchor: "x", scaleratio: 1.0 } as Partial<Plotly.LayoutAxis>
+      };
     Plotly.newPlot(
       "graph_3d",
       [{x: x, y: y, z: z,
@@ -57,7 +66,7 @@ export default class Graph3DContainer extends React.Component<Props, State> {
 
   render() {
     return (
-      <div id="graph_3d"></div>
+      <div id="graph_3d" className={classes.graph}></div>
     );
   }
 };

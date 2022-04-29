@@ -1,0 +1,9 @@
+.graphContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.graph {
+  width: 50%;
+}
+

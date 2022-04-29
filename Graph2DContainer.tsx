@@ -1,7 +1,8 @@
 
 import React from "react"
-import {range, pi, cumtrapz} from "./math_utils"
+import {range, pi, cumtrapz, shiftToCenter, rotateToHorizontal} from "./math_utils"
 import Plotly from "plotly.js-dist-min"
+import classes from "./styles.module.css"
 
 interface State {
 };
@@ -29,13 +30,15 @@ export default class Graph2DContainer extends React.Component<Props, State> {
     const t: number[] = range(0, pi, 0.001);
     const x: number[] = this.calcX(t, this.props.a);
     const y: number[] = this.calcY(t, this.props.a);
+    const pos_shifted = shiftToCenter({x, y});
+    const pos_rotated = rotateToHorizontal(pos_shifted);
     const layout = {
       autosize: true, width:  500, height: 500,
       yaxis: { scaleanchor: "x", scaleratio: 1.0 } as Partial<Plotly.LayoutAxis>
       };
     Plotly.react(
       "graph_2d",
-      [{x: x, y: y,
+      [{x: pos_rotated.x, y: pos_rotated.y,
         type: "scatter", mode: "lines"
       }], layout
       );
@@ -45,13 +48,15 @@ export default class Graph2DContainer extends React.Component<Props, State> {
     const t: number[] = range(0, pi, 0.001);
     const x: number[] = this.calcX(t, this.props.a);
     const y: number[] = this.calcY(t, this.props.a);
+    const pos_shifted = shiftToCenter({x, y});
+    const pos_rotated = rotateToHorizontal(pos_shifted);
     const layout = {
       autosize: true, width:  500, height: 500,
       yaxis: { scaleanchor: "x", scaleratio: 1.0 } as Partial<Plotly.LayoutAxis>
       };
     Plotly.newPlot(
       "graph_2d",
-      [{x: x, y: y,
+      [{x: pos_rotated.x, y: pos_rotated.y,
         type: "scatter", mode: "lines"
       }], layout
       );
@@ -59,7 +64,7 @@ export default class Graph2DContainer extends React.Component<Props, State> {
 
   render() {
     return (
-      <div id="graph_2d"></div>
+      <div id="graph_2d" className={classes.graph}></div>
     );
   }
 };

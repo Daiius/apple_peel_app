@@ -13,7 +13,6 @@ export default class MainContainer extends React.Component {
   render() {
     return (
       <div>
-        Hello, This is a interactive graph content.
         <GraphContainer />
       </div>
     )

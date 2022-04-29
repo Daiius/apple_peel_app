@@ -4,6 +4,7 @@ import * as React from "react"
 import Graph2DContainer from "./Graph2DContainer"
 import Graph3DContainer from "./Graph3DContainer"
 
+import classes from "./styles.module.css"
 
 interface Props
 {
@@ -30,8 +31,10 @@ export default class GraphContainer extends React.Component<Props, State> {
   render() {
     return (
       <div>
-        <Graph3DContainer a={this.state.a}/>
-        <Graph2DContainer a={this.state.a}/>
+        <div className={classes.graphContainer}>
+          <Graph3DContainer a={this.state.a}/>
+          <Graph2DContainer a={this.state.a}/>
+        </div>
         <input type="range" min={0} max={50} step={1} value={this.state.a} onChange={this.paramChanged}/>
       </div>
     );
