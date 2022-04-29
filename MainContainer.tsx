@@ -1,6 +1,7 @@
 
-import Graph3DContainer from "./Graph3DContainer"
-import Graph2DContainer from "./Graph2DContainer"
+import React from "react"
+
+import GraphContainer from "./GraphContainer"
 
 interface Props {
 };
@@ -13,8 +14,7 @@ export default class MainContainer extends React.Component {
     return (
       <div>
         Hello, This is a interactive graph content.
-        <Graph3DContainer />
-        <Graph2DContainer />
+        <GraphContainer />
       </div>
     )
   }

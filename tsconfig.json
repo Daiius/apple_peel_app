@@ -96,7 +96,7 @@
 
     
     // "skipDefaultLibCheck": true,                      
-    "skipLibCheck": true                                 
+    //"skipLibCheck": true                                 
   }
 }
 

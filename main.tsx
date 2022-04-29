@@ -1,7 +1,11 @@
 
+import * as React from "react"
+import { createRoot } from "react-dom/client";
+
 import MainContainer from "./MainContainer";
 
 
-const rootElement = document.getElementById("root");
-rootElement ? ReactDOM.render(<MainContainer />, rootElement) : false;
+const container = document.getElementById('root');
+const root = createRoot(container!);
+root.render(<MainContainer />);
 

@@ -1,28 +1,19 @@
 
+import React from "react"
 import {pi, range} from "./math_utils"
+import Plotly from "plotly.js-dist-min"
 
 interface State {
-  t: number[];
-  x: number[];
-  y: number[];
-  z: number[];
 };
 
 interface Props {
+  a: number;
 };
 
 export default class Graph3DContainer extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
-    const t = range(0, pi, 1e-2);
-    const a = 10;
-    this.state = {
-      t: t,
-      x: this.calcX(t, a), 
-      y: this.calcY(t, a),
-      z: this.calcZ(t, a)
-      };
   }
 
   calcX = (t: number[], a: number): number[] => {
@@ -35,27 +26,30 @@ export default class Graph3DContainer extends React.Component<Props, State> {
     return t.map(t => Math.cos(t));
   }
 
-  onCoeffChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const a = parseInt(e.target.value);
-    this.setState({
-      x: this.calcX(this.state.t, a),
-      y: this.calcY(this.state.t, a),
-      z: this.calcZ(this.state.t, a)
-      });
+  componentDidUpdate = () => {
+    const t: number[] = range(0, pi, 0.001);
+    const x: number[] = this.calcX(t, this.props.a);
+    const y: number[] = this.calcY(t, this.props.a);
+    const z: number[] = this.calcZ(t, this.props.a);
+
     const layout = { autosize: false, width:  500, height: 500 };
     Plotly.react(
-      "graph",
-      [{x: this.state.x, y: this.state.y, z: this.state.z,
+      "graph_3d",
+      [{x: x, y: y, z: z,
         type: "scatter3d", mode: "lines"
       }], layout
       );
   }
 
   componentDidMount() {
+    const t: number[] = range(0, pi, 0.001);
+    const x: number[] = this.calcX(t, this.props.a);
+    const y: number[] = this.calcY(t, this.props.a);
+    const z: number[] = this.calcZ(t, this.props.a);
     const layout = { autosize: false, width:  500, height: 500 };
     Plotly.newPlot(
-      "graph",
-      [{x: this.state.x, y: this.state.y, z: this.state.z,
+      "graph_3d",
+      [{x: x, y: y, z: z,
         type: "scatter3d", mode: "lines"
       }], layout
       );
@@ -63,12 +57,7 @@ export default class Graph3DContainer extends React.Component<Props, State> {
 
   render() {
     return (
-      <div>
-        <div id="graph"></div>
-        <input type="range" min={0} max={30} step={0.1} defaultValue={10} 
-               onChange={this.onCoeffChange}/>
-        
-      </div>
+      <div id="graph_3d"></div>
     );
   }
 };

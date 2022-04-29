@@ -37,11 +37,6 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: "umd"
   },
-  externals: {
-    'react': 'react',
-    'react-dom': 'reactDOM',
-    "plotly": "plotlly"
-  },
 //  optimization: {
 //    minimize: true
 //  }

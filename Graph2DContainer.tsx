@@ -1,28 +1,18 @@
 
+import React from "react"
 import {range, pi, cumtrapz} from "./math_utils"
-
-import {react, newPlot, LayoutAxis} from "plotly.js"
+import Plotly from "plotly.js-dist-min"
 
 interface State {
-  t: number[];
-  x: number[];
-  y: number[];
 };
 
 interface Props {
+  a: number;
 };
 
 export default class Graph2DContainer extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    const t = range(0, pi, 1e-2);
-    const a = 10;
-
-    this.state = {
-      t: t,
-      x: this.calcX(t, a),
-      y: this.calcY(t, a),
-    };
   }
 
   calcX = (t: number[], a: number) => {
@@ -35,32 +25,33 @@ export default class Graph2DContainer extends React.Component<Props, State> {
     return cumtrapz(t, dy);
   }
 
-  onCoeffChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const a = parseInt(e.target.value);
-    this.setState({
-      x: this.calcX(this.state.t, a),
-      y: this.calcY(this.state.t, a),
-      });
+  componentDidUpdate = () => {
+    const t: number[] = range(0, pi, 0.001);
+    const x: number[] = this.calcX(t, this.props.a);
+    const y: number[] = this.calcY(t, this.props.a);
     const layout = {
       autosize: true, width:  500, height: 500,
-      yaxis: { scaleanchor: "x", scaleratio: 1.0 } as Partial<LayoutAxis>
+      yaxis: { scaleanchor: "x", scaleratio: 1.0 } as Partial<Plotly.LayoutAxis>
       };
     Plotly.react(
       "graph_2d",
-      [{x: this.state.x, y: this.state.y,
+      [{x: x, y: y,
         type: "scatter", mode: "lines"
       }], layout
       );
   }
 
   componentDidMount() {
+    const t: number[] = range(0, pi, 0.001);
+    const x: number[] = this.calcX(t, this.props.a);
+    const y: number[] = this.calcY(t, this.props.a);
     const layout = {
       autosize: true, width:  500, height: 500,
-      yaxis: { scaleanchor: "x", scaleratio: 1.0 } as Partial<LayoutAxis>
+      yaxis: { scaleanchor: "x", scaleratio: 1.0 } as Partial<Plotly.LayoutAxis>
       };
     Plotly.newPlot(
       "graph_2d",
-      [{x: this.state.x, y: this.state.y,
+      [{x: x, y: y,
         type: "scatter", mode: "lines"
       }], layout
       );
@@ -68,11 +59,7 @@ export default class Graph2DContainer extends React.Component<Props, State> {
 
   render() {
     return (
-      <div>
-        <div id="graph_2d"></div>
-        <input type="range" min={0} max={30} step={0.1} defaultValue={10} onChange={this.onCoeffChange}/>
-        
-      </div>
+      <div id="graph_2d"></div>
     );
   }
 };
