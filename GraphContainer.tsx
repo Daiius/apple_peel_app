@@ -1,16 +1,12 @@
 
 import React, { useState } from "react"
 
-import Graph2DContainer from "./Graph2DContainer"
-import Graph3DContainer from "./Graph3DContainer"
+import { Graph2DContainer } from "./Graph2DContainer"
+import { Graph3DContainer } from "./Graph3DContainer"
 
 import classes from "./styles.module.css"
 
-interface Props
-{
-};
-
-export const GraphContainer = (props: Props) => {
+export const GraphContainer = () => {
   
   const [a, setA] = useState(10);
 
