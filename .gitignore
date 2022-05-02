@@ -1,2 +1,4 @@
+*.swp
+
 dist/
 node_modules/
