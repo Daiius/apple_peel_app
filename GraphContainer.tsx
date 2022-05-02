@@ -1,5 +1,5 @@
 
-import * as React from "react"
+import React, { useState } from "react"
 
 import Graph2DContainer from "./Graph2DContainer"
 import Graph3DContainer from "./Graph3DContainer"
@@ -10,33 +10,22 @@ interface Props
 {
 };
 
-interface State
-{
-  a: number;
-};
+export const GraphContainer = (props: Props) => {
+  
+  const [a, setA] = useState(10);
 
-
-export default class GraphContainer extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      a: 10
-    };
+  const paramChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setA(parseInt(e.target.value));
   }
 
-  paramChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({a: parseInt(e.target.value)});
-  }
-
-  render() {
-    return (
-      <div>
-        <div className={classes.graphContainer}>
-          <Graph3DContainer a={this.state.a}/>
-          <Graph2DContainer a={this.state.a}/>
-        </div>
-        <input type="range" min={0} max={50} step={1} value={this.state.a} onChange={this.paramChanged}/>
+  return (
+    <div>
+      <div className={classes.graphContainer}>
+        <Graph3DContainer a={a}/>
+        <Graph2DContainer a={a}/>
       </div>
+      <input type="range" min={0} max={50} step={1} value={a} 
+             onChange={paramChanged}/>
+    </div>
     );
-  }
 };
