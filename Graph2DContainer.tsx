@@ -28,25 +28,18 @@ export const Graph2DContainer = (props: Props) => {
     const y: number[] = calcY(t, props.a);
     const pos_shifted = shiftToCenter({x, y});
     const pos_rotated = rotateToHorizontal(pos_shifted);
-    const layout = {
+    const layout: Partial<Plotly.Layout> = {
       autosize: true, width:  500, height: 500,
-      yaxis: { scaleanchor: "x", scaleratio: 1.0 } as Partial<Plotly.LayoutAxis>
+      yaxis: { scaleanchor: "x", scaleratio: 1.0 }
       };
+    const data: Plotly.Data[] = [{
+      x: pos_rotated.x, y: pos_rotated.y, type: "scatter", mode: "lines"
+      }];
     if (isPlotted) {
-      Plotly.react(
-       "graph_2d",
-       [{x: pos_rotated.x, y: pos_rotated.y,
-         type: "scatter", mode: "lines"
-       }], layout
-       );
+      Plotly.react("graph_2d", data, layout);
     } else {
-      Plotly.newPlot(
-        "graph_2d",
-        [{x: pos_rotated.x, y: pos_rotated.y,
-          type: "scatter", mode: "lines"
-        }], layout
-        );
-       setIsPlotted(true);
+      Plotly.newPlot("graph_2d", data, layout);
+      setIsPlotted(true);
     }
   });
 
