@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import {range, pi, cumtrapz, shiftToCenter, rotateToHorizontal} from "./math_utils"
 import Plotly from "plotly.js-dist-min"
 import classes from "./styles.module.css"
@@ -19,8 +19,8 @@ export const Graph2DContainer = (props: Props) => {
     var dy = t.map(t => Math.sin(a*Math.sin(t))+a*Math.sin(t)*Math.cos(a*Math.sin(t)));
     return cumtrapz(t, dy);
   }
-
-  var isFirstPlot: boolean = true;
+  
+  const [isPlotted, setIsPlotted] = useState(false);
 
   useEffect(() => {
     const t: number[] = range(0, pi, 0.001);
@@ -32,21 +32,21 @@ export const Graph2DContainer = (props: Props) => {
       autosize: true, width:  500, height: 500,
       yaxis: { scaleanchor: "x", scaleratio: 1.0 } as Partial<Plotly.LayoutAxis>
       };
-    if (isFirstPlot) {
-      Plotly.newPlot(
+    if (isPlotted) {
+      Plotly.react(
        "graph_2d",
        [{x: pos_rotated.x, y: pos_rotated.y,
          type: "scatter", mode: "lines"
        }], layout
        );
-       isFirstPlot = false;
     } else {
-      Plotly.react(
+      Plotly.newPlot(
         "graph_2d",
         [{x: pos_rotated.x, y: pos_rotated.y,
           type: "scatter", mode: "lines"
         }], layout
         );
+       setIsPlotted(true);
     }
   });
 

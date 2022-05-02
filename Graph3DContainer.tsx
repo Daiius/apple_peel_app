@@ -1,5 +1,5 @@
 
-import React, { useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import {pi, range} from "./math_utils"
 import Plotly from "plotly.js-dist-min"
 import classes from "./styles.module.css"
@@ -20,7 +20,7 @@ export const Graph3DContainer = (props: Props) => {
     return t.map(t => Math.cos(t));
   }
 
-  var isFirstPlot: boolean = true;
+  const [isPlotted, setIsPlotted] = useState(false);
 
   useEffect(() => {
     const t: number[] = range(0, pi, 0.001);
@@ -34,21 +34,21 @@ export const Graph3DContainer = (props: Props) => {
       zaxis: { scaleanchor: "x", scaleratio: 1.0 } as Partial<Plotly.LayoutAxis>
       };
 
-    if (isFirstPlot) {
-      Plotly.newPlot(
-       "graph_3d",
-       [{x: x, y: y, z: z,
-         type: "scatter3d", mode: "lines"
-       }], layout
-       );
-       isFirstPlot = false;
-    } else {
+    if (isPlotted) {
       Plotly.react(
        "graph_3d",
        [{x: x, y: y, z: z,
          type: "scatter3d", mode: "lines"
        }], layout
        );
+    } else {
+      Plotly.newPlot(
+       "graph_3d",
+       [{x: x, y: y, z: z,
+         type: "scatter3d", mode: "lines"
+       }], layout
+       );
+       setIsPlotted(true);
     }
     
   });
