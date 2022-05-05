@@ -48,7 +48,7 @@ export function rotateToHorizontal(pos: {x: number[], y: number[]}) : {x: number
     result_y[i] = Math.sin(-theta)*pos.x[i] + Math.cos(-theta)*pos.y[i];
   }
 
-  if (Math.abs(result_y[0]) < 0.01) return {x: result_x, y: result_y};
+  if (Math.abs(result_y[0]) < 1e-4) return {x: result_x, y: result_y};
   else return rotateToHorizontal({x: result_x, y: result_y});
   
   //return {x: result_x, y: result_y};

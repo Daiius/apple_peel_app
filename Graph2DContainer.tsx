@@ -1,39 +1,28 @@
 
 import React, { useState, useEffect } from "react"
-import {range, pi, cumtrapz, shiftToCenter, rotateToHorizontal} from "./math_utils"
 import Plotly from "plotly.js-dist-min"
 import classes from "./styles.module.css"
 
+import * as Calc2D from "./graph_2d_calcs"
+
 type Props = {
   a: number;
+  t: number;
 };
 
 export const Graph2DContainer = (props: Props) => {
 
-  const calcX = (t: number[], a: number) => {
-    var dx = t.map(t => Math.cos(a*Math.sin(t))-a*Math.sin(t)*Math.sin(a*Math.sin(t)));
-    return cumtrapz(t, dx);
-  }
-
-  const calcY = (t: number[], a: number) => {
-    var dy = t.map(t => Math.sin(a*Math.sin(t))+a*Math.sin(t)*Math.cos(a*Math.sin(t)));
-    return cumtrapz(t, dy);
-  }
   
   const [isPlotted, setIsPlotted] = useState(false);
 
   useEffect(() => {
-    const t: number[] = range(0, pi, 0.001);
-    const x: number[] = calcX(t, props.a);
-    const y: number[] = calcY(t, props.a);
-    const pos_shifted = shiftToCenter({x, y});
-    const pos_rotated = rotateToHorizontal(pos_shifted);
+    const {x, y} = Calc2D.calcXandY(props.a);
     const layout: Partial<Plotly.Layout> = {
       autosize: true, width:  500, height: 500,
       yaxis: { scaleanchor: "x", scaleratio: 1.0 }
       };
     const data: Plotly.Data[] = [{
-      x: pos_rotated.x, y: pos_rotated.y, type: "scatter", mode: "lines"
+      x: x, y: y, type: "scatter", mode: "lines"
       }];
     if (isPlotted) {
       Plotly.react("graph_2d", data, layout);

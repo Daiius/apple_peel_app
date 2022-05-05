@@ -1,54 +1,40 @@
 
 import React, { useState, useEffect } from "react"
-import {pi, range} from "./math_utils"
 import Plotly from "plotly.js-dist-min"
 import classes from "./styles.module.css"
 
+import * as Calc3D from "./graph_3d_calcs"
+
 type Props = {
   a: number;
+  t: number;
 };
 
 export const Graph3DContainer = (props: Props) => {
 
-  const calcX = (t: number[], a: number): number[] => {
-    return t.map(t => Math.sin(t) * Math.cos(a*t));
-  }
-  const calcY = (t: number[], a: number):number[] => {
-    return t.map(t => Math.sin(t) * Math.sin(a*t));
-  }
-  const calcZ = (t: number[], a: number): number[] => {
-    return t.map(t => Math.cos(t));
-  }
 
   const [isPlotted, setIsPlotted] = useState(false);
 
   useEffect(() => {
-    const t: number[] = range(0, pi, 0.001);
-    const x: number[] = calcX(t, props.a);
-    const y: number[] = calcY(t, props.a);
-    const z: number[] = calcZ(t, props.a);
 
-    const layout = { 
+    const ps = Calc3D.calcXandYandZ(props.a);
+    const p = Calc3D.calcSpecifiedPoint(props.a, props.t);
+
+    const layout: Partial<Plotly.Layout> = { 
       autosize: true,
-      yaxis: { scaleanchor: "x", scaleratio: 1.0 } as Partial<Plotly.LayoutAxis>,
-      zaxis: { scaleanchor: "x", scaleratio: 1.0 } as Partial<Plotly.LayoutAxis>
+      yaxis: { scaleanchor: "x", scaleratio: 1.0 },
+      showlegend: false
       };
+    const data: Plotly.Data[] = [
+      {x: ps.x, y: ps.y, z: ps.z, type: "scatter3d", mode: "lines"},
+      {x:  p.x, y:  p.y, z:  p.z, type: "scatter3d"}
+      ];
 
     if (isPlotted) {
-      Plotly.react(
-       "graph_3d",
-       [{x: x, y: y, z: z,
-         type: "scatter3d", mode: "lines"
-       }], layout
-       );
+      Plotly.react("graph_3d", data, layout);
     } else {
-      Plotly.newPlot(
-       "graph_3d",
-       [{x: x, y: y, z: z,
-         type: "scatter3d", mode: "lines"
-       }], layout
-       );
-       setIsPlotted(true);
+      Plotly.newPlot("graph_3d", data, layout);
+      setIsPlotted(true);
     }
     
   });
