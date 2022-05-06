@@ -27,3 +27,4 @@ export const calcXandYandZ = (a: number): Points3D => {
 export const calcSpecifiedPoint = (a: number, t: number): Points3D => {
   return { x: calcX([t],a), y: calcY([t],a), z: calcZ([t],a) };
 }
+

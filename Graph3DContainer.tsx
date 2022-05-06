@@ -21,13 +21,14 @@ export const Graph3DContainer = (props: Props) => {
     const p = Calc3D.calcSpecifiedPoint(props.a, props.t);
 
     const layout: Partial<Plotly.Layout> = { 
-      autosize: true,
+      autosize: false, width: 500, height: 500,
+      xaxis: { autorange: false, range: [-0.5, +0.5] },
       yaxis: { scaleanchor: "x", scaleratio: 1.0 },
       showlegend: false
       };
     const data: Plotly.Data[] = [
       {x: ps.x, y: ps.y, z: ps.z, type: "scatter3d", mode: "lines"},
-      {x:  p.x, y:  p.y, z:  p.z, type: "scatter3d"}
+      {x:  p.x, y:  p.y, z:  p.z, type: "scatter3d", marker: { size: 5 } }
       ];
 
     if (isPlotted) {
