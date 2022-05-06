@@ -20,6 +20,9 @@ export const Graph3DContainer = (props: Props) => {
     const ps = Calc3D.calcXandYandZ(props.a);
     const p = Calc3D.calcSpecifiedPoint(props.a, props.t);
 
+    const sphere1 = Calc3D.calcSphereMesh("upper");
+    const sphere2 = Calc3D.calcSphereMesh("lower");
+
     const layout: Partial<Plotly.Layout> = { 
       autosize: false, width: 500, height: 500,
       xaxis: { autorange: false, range: [-0.5, +0.5] },
@@ -27,8 +30,15 @@ export const Graph3DContainer = (props: Props) => {
       showlegend: false
       };
     const data: Plotly.Data[] = [
-      {x: ps.x, y: ps.y, z: ps.z, type: "scatter3d", mode: "lines"},
-      {x:  p.x, y:  p.y, z:  p.z, type: "scatter3d", marker: { size: 5 } }
+      {x:      ps.x, y:      ps.y, z:      ps.z, type: "scatter3d", 
+       mode: "lines", line: { width: 5, color: "rgb(128, 255, 255)"} },
+      {x:       p.x, y:       p.y, z:       p.z, type: "scatter3d", 
+       marker: { size: 5 } },
+      // NOTE : to use color property, you have to edit @types/plotly.js/index.d.ts!
+      {x: sphere1.x, y: sphere1.y, z: sphere1.z, type: "mesh3d", 
+       opacity: 0.3, color: "rgb(255,0,0)" },
+      {x: sphere2.x, y: sphere2.y, z: sphere2.z, type: "mesh3d", 
+       opacity: 0.3, color: "rgb(255,0,0)" },
       ];
 
     if (isPlotted) {

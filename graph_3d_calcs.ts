@@ -28,3 +28,27 @@ export const calcSpecifiedPoint = (a: number, t: number): Points3D => {
   return { x: calcX([t],a), y: calcY([t],a), z: calcZ([t],a) };
 }
 
+type SphereModes = "upper" | "lower";
+
+export const calcSphereMesh = (mode: SphereModes): Points3D => {
+  const delta = MathU.pi * 0.05;
+  const phi   = (
+      mode == "upper" 
+    ? MathU.range(0, MathU.pi/2 + delta, delta*0.5)
+    : MathU.range(MathU.pi/2 , MathU.pi, delta*0.5)
+    );
+  const theta = MathU.range(0, MathU.pi*2, delta);
+  var points: Points3D = {x: [], y: [], z: []};
+  for (var i = 0; i < theta.length; i++) {
+    for (var j = 0; j < phi.length; j++) {
+      const r = 0.99;
+      const x = r * Math.sin(phi[j]) * Math.cos(theta[i]);
+      const y = r * Math.sin(phi[j]) * Math.sin(theta[i]);
+      const z = r * Math.cos(phi[j]);
+      points.x.push(x);
+      points.y.push(y);
+      points.z.push(z);
+    }
+  }
+  return points;
+}
