@@ -39,7 +39,7 @@ export const Graph3DContainer = (props: Props) => {
       };
     const data: Plotly.Data[] = [
       {x:      ps.x, y:      ps.y, z:      ps.z, type: "scatter3d", 
-       mode: "lines", line: { width: 5, color: "rgb(128, 255, 255)"} },
+       mode: "lines", line: { width: 5, color: "rgb(128, 200, 200)"} },
       {x:       p.x, y:       p.y, z:       p.z, type: "scatter3d", 
        marker: { size: 5 } },
       {x: sphere1.x, y: sphere1.y, z: sphere1.z, type: "mesh3d", 

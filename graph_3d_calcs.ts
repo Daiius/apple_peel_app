@@ -41,7 +41,7 @@ export const calcSphereMesh = (mode: SphereModes): Points3D => {
   var points: Points3D = {x: [], y: [], z: []};
   for (var i = 0; i < theta.length; i++) {
     for (var j = 0; j < phi.length; j++) {
-      const r = 0.99;
+      const r = 0.985;
       const x = r * Math.sin(phi[j]) * Math.cos(theta[i]);
       const y = r * Math.sin(phi[j]) * Math.sin(theta[i]);
       const z = r * Math.cos(phi[j]);

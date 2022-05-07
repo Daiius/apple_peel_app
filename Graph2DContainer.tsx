@@ -36,7 +36,8 @@ export const Graph2DContainer = (props: Props) => {
       showlegend: false
       };
     const data: Plotly.Data[] = [
-      {x: points.x, y: points.y, type: "scatter", mode: "lines"},
+      {x: points.x, y: points.y, type: "scatter", mode: "lines",
+       line: { color: "rgb(128,200,200)" } },
       {x: p.x, y: p.y, type: "scatter", marker: { size: 10 } }
       ];
     if (isPlotted) {
