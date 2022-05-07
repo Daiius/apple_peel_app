@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
@@ -20,17 +19,11 @@ module.exports = {
       {
         loader: 'ts-loader',
         test: /\.tsx?$/,
-        exclude: [
-          /node_modules/
-        ],
-        options: {
-          configFile: 'tsconfig.json'
-        }
       }
     ]
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js']
+    extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
     filename: 'bundle.js',

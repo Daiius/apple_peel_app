@@ -1,6 +1,14 @@
 
 import React, { useState, useEffect } from "react"
+
 import Plotly from "plotly.js-dist-min"
+// using module augmentation to add color property in PlotData
+declare module "plotly.js-dist-min" {
+  interface PlotData {
+    color: string;
+  }
+}
+
 import classes from "./styles.module.css"
 
 import * as Calc2D from "./graph_2d_calcs"

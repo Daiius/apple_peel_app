@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    
+    // "traceResolution": true,    
 
     
     // "incremental": true,                              
@@ -30,7 +30,7 @@
     // "baseUrl": "./",                                  
     // "paths": {},                                      
     // "rootDirs": [],                                   
-    // "typeRoots": [],                                  
+    // "typeRoots": ["./custom_types/@types", "./node_modules/@types"],                                  
     // "types": [],                                      
     "allowUmdGlobalAccess": true,                     
     // "resolveJsonModule": true,                        
